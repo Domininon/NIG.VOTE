@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vote Recorded</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #c7eee2;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 27px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .checkmark {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background-color: #4CAF50;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .checkmark::before {
+      content: '✔';
+      color: white;
+      font-size: 36px;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    p {
+      font-size: 1em;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 30px 70px;
+      font-size: 1em;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="checkmark"></div>
+    <h2>Your vote was recorded!</h2>
+    <p>You are not allowed to see the results right now. Please wait until the results are public.</p>
+     <a href="index.html" class="button"> click here to go back home</a>
+  </div>
+
+
+
+
+  
+    <script src="static/javascript/Script.js"></script>
+    <script src="static/javascript/otpScript.js"></script>
+    <script src="static/javascript/camScript.js"></script>
+</body>
+</html>

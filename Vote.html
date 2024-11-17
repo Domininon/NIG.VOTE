@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NIG.VOTE | Vote</title>
+
+    <link rel="stylesheet" href="static/css/Style.css">
+    <link rel="stylesheet" href="static/css/VoteStyle.css">
+    <link rel="stylesheet" href="static/css/Login.css">
+    <link rel="stylesheet" href="static/css/otpStyle.css">
+
+</head>
+<body>
+    <nav>
+        <label class="logo">NIG.VOTE</label>
+        <ul class="dropdown-content">
+            <li class="nav-item"><a href="index.html" class="hov">Home</a></li>
+            <li class="nav-item">
+                <div class="select-menu">
+                    <div class="select-btn" id="select-btn">
+                        <a id="text" class="active hov">Election</a>
+                        <div class="caret"></div>
+                    </div>
+            
+                    <ul class="list">
+                        <li class="option" style="--i:2;">
+                            <a href="Elect.html" class="option-text">Election Results</a>
+                        </li>
+                        <li class="option" style="--i:1;">
+                            <a href="Vote.html" class="option-text active">Vote</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item"><a href="About.html" class="hov">About</a></li>
+
+            <button class="loginBtn scale"><a href="Login.html" style="color: white;">Login</a></button>
+        </ul>
+
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </nav>
+
+    <div class="positionVote">
+        <div class="wrapperVote">
+            <div class="form-box vote">
+                <h2 style="color:#0AA91A;">Vote</h2>
+                    
+                        <select name="electionType" class="list">
+                            <option value="option1"> Election Type</option>
+                            <option value="option2"> Presidential</option>
+                            <option value="option3"> Governorship</option>
+                            <option value="option4"> Senatorial </option>
+                            <option value="option5"> House of Representatives</option>
+                            <option value="option6"> General Assembly</option>
+                        </select>
+                
+                        
+
+                        <select name="polParty" id="list" class="list">
+                            <option value="option1"> Political Party</option>
+                            <option value="option2"> PDP</option>
+                            <option value="option3"> APC</option>
+                            <option value="option4"> SVG </option>
+                            <option value="option5"> OOP</option>
+                            <option value="option6"> GAD </option>
+                        </select>
+                    
+
+                    <div class="input-box" id="candidate-input">
+                        <span class="icon"></span>
+                        <input type="Text" placeholder="Enter your NIN" required>
+                    </div>
+    
+                    <div class="input-box" id="voter-id">
+                        <span class="icon"></span>
+                        <input type="text" placeholder="Enter your voter ID" required>
+                    </div>
+
+                    <div class="input-box" id="voter-password">
+                        <span class="icon"></span>
+                        <input class="pWord" type="password" placeholder="Enter your password" required>
+                    </div>
+                    
+                    <button type="submit" class="register-link"><a href="VoteConfirm.html" class="next" >Next</a></button>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+   
+    <!-- Partner Info & Sign-Up Section -->
+    <!-- <section class="partner-signup-section">
+        <div class="partner-info">
+            <img src="usagov-logo.png" alt="NIG.VOTE Logo" class="partner-logo">
+            <span>Visit our partner site to find more information about voting in Nigeria.</span>
+        </div>
+        <div class="signup-form">
+            <p>Sign up to get email from NIG.VOTE about  government benefits and services.</p>
+            <form>
+                <input type="email" id="email" placeholder="Enter your email address" required>
+                <button type="submit">Sign up</button>
+            </form>
+        </div>
+    </section> -->
+
+ 
+    <!-- Main footer -->
+    <!-- <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="logo.png" alt="SpeakerDeck Logo">
+                <div class="social-icons">
+                    <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+                    <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+                    <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+                </div>
+            </div>
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>Top Categories</h4>
+                    <ul>
+                        <li><a href="#">Programming</a></li>
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Storyboards</a></li>
+                        <li><a href="#">Featured decks</a></li>
+                        <li><a href="#">Featured speakers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Use Cases</h4>
+                    <ul>
+                        <li><a href="#">Storyboard Artists</a></li>
+                        <li><a href="#">Educators</a></li>
+                        <li><a href="#">Students</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Compare Speaker Deck</a></li>
+                        <li><a href="#">Advertising</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="#">Private URLs</a></li>
+                        <li><a href="#">Password Protection</a></li>
+                        <li><a href="#">Custom URLs</a></li>
+                        <li><a href="#">Scheduled Publishing</a></li>
+                        <li><a href="#">Remove Branding</a></li>
+                        <li><a href="#">Restrict Embedding</a></li>
+                        <li><a href="#">Notes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <hr>
+            <p>Copyright © 2024 Dodo Design's. All slide content and descriptions are owned by me.</p>
+            <ul class="footer-links">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">DMCA</a></li>
+                <li><a href="#">Accessibility Statement</a></li>
+            </ul>
+        </div>
+    </footer> -->
+
+
+
+    <script src="static/javascript/Script.js"></script>
+    <script src="static/javascript/otpScript.js"></script>
+    <script src="static/javascript/camScript.js"></script>
+    
+</body>
+</html>

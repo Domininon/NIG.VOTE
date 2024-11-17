@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Election Results</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f6fa;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      background-color: #f0f0f0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .status-label {
+      display: inline-block;
+      background-color: #28a745;
+      color: white;
+      border-radius: 15px;
+      padding: 4px 12px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .title {
+      font-size: 20px;
+      color: #333;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .date {
+      font-size: 14px;
+      color: #666;
+      text-align: right;
+    }
+
+
+
+
+    table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    }
+
+    caption {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    }
+
+    th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    }
+
+    th {
+    background-color: #f2f2f2;
+    }
+    tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+    }
+
+    tfoot {
+    font-weight: bold;
+    }
+
+    tfoot td {
+    border-top: 2px solid #ddd;
+    }
+
+
+    .responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  .responsive-table th,
+  .responsive-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  .responsive-table th {
+    background-color: #f2f2f2;
+  }
+  @media screen and (max-width: 600px) {
+    .responsive-table thead {
+      display: none;
+    }
+    .responsive-table tr {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .responsive-table td {
+      display: block;
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+    }
+    .responsive-table td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      width: 50%;
+      padding-left: 15px;
+      font-weight: bold;
+      text-align: left;
+    }
+  }
+
+    .content {
+      display: flex;
+      padding: 20px;
+      gap: 20px;
+    }
+
+
+    .results {
+      flex: 2;
+    }
+
+    .results h2 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .results .turnout {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .results-table th,
+    .results-table td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .results-table th {
+      background-color: #e9ecef;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .summary {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .sidebar {
+      flex: 1;
+      padding: 7px;
+      background-color: #f0f7ff;
+      border: 1px solid #d1e3f8;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #333;
+      text-align: center;
+    }
+
+    .sidebar h3 {
+      font-size: 1.1em;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .sidebar p {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .sidebar a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .sidebar button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .sidebar button:hover {
+      background-color: #0056b3;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-top: 1px solid #ddd;
+    }
+
+    .buttons button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .buttons button:last-child {
+      background-color: #007bff;
+    }
+
+    .buttons button:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .content {
+        flex-direction: column;
+      }
+      .sidebar button{
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div>
+      <span class="status-label">Finished</span>
+      <span class="title">General Election &gt; Results</span>
+    </div>
+    <div class="date">Nigeria <br>2024-10-21 12:02:49</div>
+  </div>
+
+
+<table>
+  <caption>DECLARATION OF RESULTS</caption>
+  <thead>
+    <tr>
+      <th>S/N</th>
+      <th>NAME OF CANDIDATE</th>
+      <th>GENDER</th>
+      <th>POLITICAL PARTY</th>
+      <th>VOTES RECEIVED</th>
+      <th>REMARKS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Ositelu Isaac Babatunde</td>
+      <td>M</td>
+      <td>A</td>
+      <td>19,219</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Abdulrashid Hassan Baba</td>
+      <td>M</td>
+      <td>AA</td>
+      <td>14,380</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Omoyele Sowore</td>
+      <td>M</td>
+      <td>AAC</td>
+      <td>33,953</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Chike Ukaegbu</td>
+      <td>M</td>
+      <td>AAP</td>
+      <td>8,902</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Shipi Moses Godia</td>
+      <td>M</td>
+      <td>ABP</td>
+      <td>4,523</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Nwokeafor Ikechukwu Ndubuisi</td>
+      <td>M</td>
+      <td>ACD</td>
+      <td>11,325</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Ezekwesili Obiageli Katryn</td>
+      <td>F</td>
+      <td>ACPN</td>
+      <td>7,223</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Mailafia Obadiah</td>
+      <td>M</td>
+      <td>ADC</td>
+      <td>97,874</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Yabagi Sani Yusuf</td>
+      <td>M</td>
+      <td>ADP</td>
+      <td>54,930</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Nwachukwu Chuks Nwabuikwu</td>
+      <td>M</td>
+      <td>AGA</td>
+      <td>4,689</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>Chief Umenwa Godwin</td>
+      <td>M</td>
+      <td>AGAP</td>
+      <td>3,071</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>Obaje Yusufu Ameh</td>
+      <td>M</td>
+      <td>ANDP</td>
+      <td>3,104</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>Durotoye Adetokunbo Olufela</td>
+      <td>M</td>
+      <td>ANN</td>
+      <td>16,779</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>Shittu Moshood Asiwaju</td>
+      <td>M</td>
+      <td>ANF</td>
+      <td>3,586</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>Fasua Tope Kolade</td>
+      <td>M</td>
+      <td>ANRP</td>
+      <td>4,340</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>Ibrahim Aliyu Hassan</td>
+      <td>M</td>
+      <td>APA</td>
+      <td>36,866</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>Buhari Muhammadu</td>
+      <td>M</td>
+      <td>APC</td>
+      <td>15,191,847</td>
+      <td>ELECTED</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>Shitu Mohammed Kabir</td>
+      <td>M</td>
+      <td>APDA</td>
+      <td>26,558</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>Gbor John Wilson Terwase</td>
+      <td>M</td>
+      <td>APGA</td>
+      <td>66,851</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>Yusuf Mamman Dantalle</td>
+      <td>M</td>
+      <td>APM</td>
+      <td>26,039</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>Obinna Uchechukwu Ikeagwuonu</td>
+      <td>M</td>
+      <td>APP</td>
+      <td>3,585</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>Dara John</td>
+      <td>M</td>
+      <td>ASD</td>
+      <td>2,146</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>Angela Johnson</td>
+      <td>F</td>
+      <td>AUN</td>
+      <td>1,092</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>David Esosa Ize-Iyamu</td>
+      <td>M</td>
+      <td>BNPP</td>
+      <td>1,649</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>Abah Lewis Elaigwu</td>
+      <td>M</td>
+      <td>CAP</td>
+      <td>1,111</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td>Ojinika Geff Chizee</td>
+      <td>M</td>
+      <td>CC</td>
+      <td>2,391</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td>Etim Emmanuel Ishie</td>
+      <td>M</td>
+      <td>CNP</td>
+      <td>1,874</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td>Ukonga Frank</td>
+      <td>M</td>
+      <td>DA</td>
+      <td>2,769</td>
+      <td></td>
+    </tr>
+  <!-- </tbody>
+</table> -->
+
+    <tr>
+  <td>29</td>
+  <td>Ibrahim Usman Alhaji</td>
+  <td>M</td>
+  <td>NRM</td>
+  <td>6,229</td>
+  <td></td>
+</tr>
+<tr>
+  <td>30</td>
+  <td>Moses Ayibiowu</td>
+  <td>M</td>
+  <td>NUP</td>
+  <td>5,323</td>
+  <td></td>
+</tr>
+<tr>
+  <td>31</td>
+  <td>Felix Nicolas</td>
+  <td>M</td>
+  <td>PCP</td>
+  <td>110,196</td>
+  <td></td>
+</tr>
+<tr>
+  <td>32</td>
+  <td>Abubakar Atiku</td>
+  <td>M</td>
+  <td>PDP</td>
+  <td>11,262,978</td>
+  <td></td>
+</tr>
+<tr>
+  <td>33</td>
+  <td>Ameh Peter Ojonugwa</td>
+  <td>M</td>
+  <td>PPA</td>
+  <td>21,822</td>
+  <td></td>
+</tr>
+<tr>
+  <td>34</td>
+  <td>Victor Okhai</td>
+  <td>M</td>
+  <td>PPC</td>
+  <td>8,979</td>
+  <td></td>
+</tr>
+<tr>
+  <td>35</td>
+  <td>Major Hamza Al Mustapha</td>
+  <td>M</td>
+  <td>PPN</td>
+  <td>4,622</td>
+  <td></td>
+</tr>
+<tr>
+  <td>36</td>
+  <td>Gbenga Olawepo-Hashim</td>
+  <td>M</td>
+  <td>PT</td>
+  <td>2,613</td>
+  <td></td>
+</tr>
+<tr>
+  <td>37</td>
+  <td>Israel Nonyerem Davidson Dr.</td>
+  <td>M</td>
+  <td>RAP</td>
+  <td>2,972</td>
+  <td></td>
+</tr>
+<tr>
+  <td>38</td>
+  <td>Osuala Chukwudi John Kennedy</td>
+  <td>M</td>
+  <td>RBNP</td>
+  <td>1,792</td>
+  <td></td>
+</tr>
+<tr>
+  <td>39</td>
+  <td>Nsehe Nseobong</td>
+  <td>M</td>
+  <td>RP</td>
+  <td>2,388</td>
+  <td></td>
+</tr>
+<tr>
+  <td>40</td>
+  <td>Donald Duke</td>
+  <td>M</td>
+  <td>SDP</td>
+  <td>34,746</td>
+  <td></td>
+</tr>
+<tr>
+  <td>41</td>
+  <td>Da-Silva Thomas Ayo</td>
+  <td>M</td>
+  <td>SNC</td>
+  <td>28,680</td>
+  <td></td>
+</tr>
+<tr>
+  <td>42</td>
+  <td>Ahmed Buhari</td>
+  <td>M</td>
+  <td>SNP</td>
+  <td>3,941</td>
+  <td></td>
+</tr>
+<tr>
+  <td>43</td>
+  <td>Balogun Isiaka Ishola</td>
+  <td>M</td>
+  <td>UDP</td>
+  <td>3,170</td>
+  <td></td>
+</tr>
+<tr>
+  <td>44</td>
+  <td>Mark Emmanuel Audu</td>
+  <td>M</td>
+  <td>UP</td>
+  <td>1,561</td>
+  <td></td>
+</tr>
+<tr>
+  <td>45</td>
+  <td>Inwa Ahmed Sakil</td>
+  <td>M</td>
+  <td>UPN</td>
+  <td>1,631</td>
+  <td></td>
+</tr>
+<tr>
+  <td>46</td>
+  <td>Nwangwu Uchenna Peter</td>
+  <td>M</td>
+  <td>WTPN</td>
+  <td>732</td>
+  <td></td>
+</tr>
+<tr>
+  <td>47</td>
+  <td>Ali Soyode M</td>
+  <td>M</td>
+  <td>YES</td>
+  <td>2,394</td>
+  <td></td>
+</tr>
+<tr>
+  <td>48</td>
+  <td>Moghalu Kingsley Bosah Chiedu</td>
+  <td>M</td>
+  <td>YPP</td>
+  <td>21,886</td>
+  <td></td>
+</tr>
+</tbody>
+</table>
+
+
+
+<table class="responsive-table">
+  <thead>
+    <tr>
+      <th>SUMMARY</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-label="A">TOTAL NUMBER OF REGISTERED VOTERS</td>
+      <td data-label="84,004,084">84,004,084</td>
+    </tr>
+    <tr>
+      <td data-label="B">TOTAL NUMBER OF REGISTERED VOTERS (AS COLLATED)</td>
+      <td data-label="82,344,107">82,344,107</td>
+    </tr>
+    <tr>
+      <td data-label="C">TOTAL NUMBER OF ACCREDITED VOTERS</td>
+      <td data-label="29,364,209">29,364,209</td>
+    </tr>
+    <tr>
+      <td data-label="D">TOTAL NUMBER OF VALID VOTES (AS COLLATED)</td>
+      <td data-label="27,324,583">27,324,583</td>
+    </tr>
+    <tr>
+      <td data-label="E">TOTAL NUMBER OF REJECTED VOTES (AS COLLATED)</td>
+      <td data-label="1,289,607">1,289,607</td>
+    </tr>
+    <tr>
+      <td data-label="F">TOTAL NUMBER OF VOTES CAST (AS COLLATED)</td>
+      <td data-label="28,614,190">28,614,190</td>
+    </tr>
+    <tr>
+      <td data-label="G">PERCENTAGE TURN OUT (AS COLLATED)</td>
+      <td data-label="35.66%">35.66%</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+    <!-- <div class="sidebar">
+      <h3>Publish Results</h3>
+      <p>To display these results on your voting website at <a href="#">nig.vote.com</a>, you must publish them.</p>
+      <button onclick="publishResults()">Publish</button>
+    </div>
+  </div> -->
+
+  <!-- <div class="buttons">
+    <button>Raw Results CSV</button>
+    <button>Certified Results PDF</button>
+  </div>
+</div> -->
+
+
+
+<!-- Partner Info & Sign-Up Section -->
+    <!-- <section class="partner-signup-section">
+        <div class="partner-info">
+            <img src="./static/img/nigflag.jfif" alt="" class="partner-logo">
+            <span>Visit our partner site to find more information about voting in Nigeria.</span>
+        </div>
+        <div class="signup-form">
+            <p>Sign up to get email from NIG.VOTE about government benefits and services.</p>
+            <form>
+                <input type="email" id="email" placeholder="Enter your email address" required>
+                <button type="submit">Sign up</button>
+            </form>
+        </div>
+    </section> -->
+
+ 
+    <!-- Main footer -->
+    <!-- <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="./static/img/nigflag.jfif" alt=" Logo">
+                <div class="social-icons">
+                    <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+                    <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+                </div>
+            </div>
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>Top Categories</h4>
+                    <ul>
+                        <li><a href="#">Programming</a></li>
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Storyboards</a></li>
+                        <li><a href="#">Featured decks</a></li>
+                        <li><a href="#">Featured speakers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Use Cases</h4>
+                    <ul>
+                        <li><a href="#">Storyboard Artists</a></li>
+                        <li><a href="#">Educators</a></li>
+                        <li><a href="#">Students</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Compare Speaker Deck</a></li>
+                        <li><a href="#">Advertising</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="#">Private URLs</a></li>
+                        <li><a href="#">Password Protection</a></li>
+                        <li><a href="#">Custom URLs</a></li>
+                        <li><a href="#">Scheduled Publishing</a></li>
+                        <li><a href="#">Remove Branding</a></li>
+                        <li><a href="#">Restrict Embedding</a></li>
+                        <li><a href="#">Notes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <hr>
+            <p>Copyright © 2024 Dodo Design's. All slide content and descriptions are owned by me.</p>
+            <ul class="footer-links">
+                <li><a href="About.html">About</a></li>
+                <li><a href="#">Terms</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">DMCA</a></li>
+                <li><a href="#">Accessibility Statement</a></li>
+            </ul>
+        </div>
+    </footer> -->
+
+<script>
+  function publishResults() {
+    alert("Publishing results...");
+    // Add publish functionality here
+  }
+</script>
+
+</body>
+</html>
